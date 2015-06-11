@@ -2,23 +2,9 @@
 /**
  * Barzahlen Payment Module SDK
  *
- * NOTICE OF LICENSE
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 3 of the License
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see http://www.gnu.org/licenses/
- *
- * @copyright   Copyright (c) 2012 Zerebro Internet GmbH (http://www.barzahlen.de)
+ * @copyright   Copyright (c) 2015 Cash Payment Solutions GmbH (https://www.barzahlen.de)
  * @author      Alexander Diebler
- * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @license     The MIT License (MIT) - http://opensource.org/licenses/MIT
  */
 
 class Barzahlen_Notification extends Barzahlen_Base
@@ -81,7 +67,7 @@ class Barzahlen_Notification extends Barzahlen_Base
 
         foreach ($this->_notficationData as $attribute) {
             if (!array_key_exists($attribute, $this->_receivedData)) {
-                throw new Exception('Notification array not complete, at least ' . $attribute . ' is missing.');
+                throw new Barzahlen_Exception('Notification array not complete, at least ' . $attribute . ' is missing.');
             }
         }
     }
@@ -93,23 +79,23 @@ class Barzahlen_Notification extends Barzahlen_Base
     {
         if ($this->_notificationType == 'refund') {
             if (!is_numeric($this->_receivedData['refund_transaction_id'])) {
-                throw new Exception('Refund transaction id is not numeric.');
+                throw new Barzahlen_Exception('Refund transaction id is not numeric.');
             }
             if (!is_numeric($this->_receivedData['origin_transaction_id'])) {
-                throw new Exception('Origin transaction id is not numeric.');
+                throw new Barzahlen_Exception('Origin transaction id is not numeric.');
             }
         } else {
             if (!is_numeric($this->_receivedData['transaction_id'])) {
-                throw new Exception('Transaction id is not numeric.');
+                throw new Barzahlen_Exception('Transaction id is not numeric.');
             }
         }
 
         if ($this->_shopId != $this->_receivedData['shop_id']) {
-            throw new Exception('Shop id doesn\'t match the given value.');
+            throw new Barzahlen_Exception('Shop id doesn\'t match the given value.');
         }
 
         if (!preg_match('/^\d{1,3}(\.\d\d?)?$/', $this->_receivedData['amount'])) {
-            throw new Exception('Amount is no valid value.');
+            throw new Barzahlen_Exception('Amount is no valid value.');
         }
     }
 
@@ -123,7 +109,7 @@ class Barzahlen_Notification extends Barzahlen_Base
         $generatedHash = $this->_createHash($hashArray, $this->_notificationKey);
 
         if ($receivedHash != $generatedHash) {
-            throw new Exception('Notification hash is not valid.');
+            throw new Barzahlen_Exception('Notification hash is not valid.');
         }
     }
 

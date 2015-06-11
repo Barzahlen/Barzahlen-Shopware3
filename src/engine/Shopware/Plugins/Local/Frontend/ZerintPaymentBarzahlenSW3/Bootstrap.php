@@ -4,21 +4,7 @@ require_once dirname(__FILE__) . '/Components/Barzahlen/Api/loader.php';
 /**
  * Barzahlen Payment Module (Shopware 3.5)
  *
- * NOTICE OF LICENSE
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation; version 3 of the License
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see http://www.gnu.org/licenses/
- *
- * @copyright   Copyright (c) 2012 Zerebro Internet GmbH (http://www.barzahlen.de)
+ * @copyright   Copyright (c) 2015 Cash Payment Solutions GmbH (https://www.barzahlen.de)
  * @author      Alexander Diebler
  * @license     http://opensource.org/licenses/AGPL-3.0  GNU Affero General Public License, version 3 (GPL-3.0)
  */
@@ -213,7 +199,7 @@ class Shopware_Plugins_Frontend_ZerintPaymentBarzahlenSW3_Bootstrap extends Shop
      */
     public function getVersion()
     {
-        return "1.0.3";
+        return "1.0.4";
     }
 
     /**
@@ -339,7 +325,7 @@ class Shopware_Plugins_Frontend_ZerintPaymentBarzahlenSW3_Bootstrap extends Shop
                 if ($response != false) {
                     echo '<script type="text/javascript">
                           if(confirm(unescape("F%FCr das Barzahlen-Plugin ist eine neue Version (' . (string) $response . ') verf%FCgbar. Jetzt ansehen?"))) {
-                            window.location.href = "http://www.barzahlen.de/partner/integration/shopsysteme/12/shopware";
+                            window.location.href = "https://integration.barzahlen.de/de/shopsysteme/shopware";
                           }</script>';
                 }
             } catch (Exception $e) {

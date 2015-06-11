@@ -2,23 +2,9 @@
 /**
  * Barzahlen Payment Module SDK
  *
- * NOTICE OF LICENSE
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 3 of the License
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see http://www.gnu.org/licenses/
- *
- * @copyright   Copyright (c) 2012 Zerebro Internet GmbH (http://www.barzahlen.de)
+ * @copyright   Copyright (c) 2015 Cash Payment Solutions GmbH (https://www.barzahlen.de)
  * @author      Alexander Diebler
- * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @license     The MIT License (MIT) - http://opensource.org/licenses/MIT
  */
 
 abstract class Barzahlen_Request_Base extends Barzahlen_Base
@@ -79,13 +65,13 @@ abstract class Barzahlen_Request_Base extends Barzahlen_Base
     public function parseXml($xmlResponse, $paymentKey)
     {
         if (!is_string($xmlResponse) || $xmlResponse == '') {
-            throw new Exception('No valid xml response received.');
+            throw new Barzahlen_Exception('No valid xml response received.');
         }
 
         try {
             $this->_xmlObj = new SimpleXMLElement($xmlResponse);
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Barzahlen_Exception($e->getMessage());
         }
 
         $this->_getXmlError();
@@ -100,7 +86,7 @@ abstract class Barzahlen_Request_Base extends Barzahlen_Base
     protected function _getXmlError()
     {
         if ($this->_xmlObj->{'result'} != 0) {
-            throw new Exception('XML response contains an error: ' . $this->_xmlObj->{'error-message'}, (int) $this->_xmlObj->{'result'});
+            throw new Barzahlen_Exception('XML response contains an error: ' . $this->_xmlObj->{'error-message'}, (int) $this->_xmlObj->{'result'});
         }
     }
 
@@ -130,7 +116,7 @@ abstract class Barzahlen_Request_Base extends Barzahlen_Base
         $generatedHash = $this->_createHash($this->_xmlData, $paymentKey);
 
         if ($receivedHash != $generatedHash) {
-            throw new Exception('response - xml hash not valid');
+            throw new Barzahlen_Exception('response - xml hash not valid');
         }
 
         unset($this->_xmlData['result']);
